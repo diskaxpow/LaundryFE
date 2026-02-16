@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import {
-  View,
+  Alert,
+  FlatList,
+  Modal,
   ScrollView,
   Text,
-  TouchableOpacity,
-  FlatList,
   TextInput,
-  Alert,
-  Modal,
+  TouchableOpacity,
+  View,
 } from "react-native";
-import { useVoucherStore } from "../../store/voucherStore";
 import { useAuthStore } from "../../store/authStore";
+import { useVoucherStore } from "../../store/voucherStore";
 
 export const ClaimVoucherScreen: React.FC = () => {
   const { user } = useAuthStore();
@@ -25,7 +25,7 @@ export const ClaimVoucherScreen: React.FC = () => {
   } = useVoucherStore();
 
   const [tabActive, setTabActive] = useState<"available" | "claimed">(
-    "available"
+    "available",
   );
   const [voucherCode, setVoucherCode] = useState("");
   const [showCodeModal, setShowCodeModal] = useState(false);
@@ -183,8 +183,8 @@ export const ClaimVoucherScreen: React.FC = () => {
               {isExpired
                 ? "Expired"
                 : userClaimed.some((uv) => uv.voucherId === item.id)
-                ? "Sudah Di-Claim"
-                : "Claim Sekarang"}
+                  ? "Sudah Di-Claim"
+                  : "Claim Sekarang"}
             </Text>
           </TouchableOpacity>
         )}
@@ -441,7 +441,9 @@ export const ClaimVoucherScreen: React.FC = () => {
                   alignItems: "center",
                 }}
               >
-                <Text style={{ fontSize: 14, fontWeight: "600", color: "#999" }}>
+                <Text
+                  style={{ fontSize: 14, fontWeight: "600", color: "#999" }}
+                >
                   Batal
                 </Text>
               </TouchableOpacity>
@@ -458,7 +460,9 @@ export const ClaimVoucherScreen: React.FC = () => {
                   opacity: isLoading ? 0.6 : 1,
                 }}
               >
-                <Text style={{ fontSize: 14, fontWeight: "600", color: "#fff" }}>
+                <Text
+                  style={{ fontSize: 14, fontWeight: "600", color: "#fff" }}
+                >
                   {isLoading ? "⏳ Proses..." : "Claim"}
                 </Text>
               </TouchableOpacity>

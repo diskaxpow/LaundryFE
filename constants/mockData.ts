@@ -1,4 +1,4 @@
-import { Order, PaymentMethod, User, Voucher, UserVoucher } from "../types";
+import { Order, PaymentMethod, User, UserVoucher, Voucher } from "../types";
 
 // Mock Users
 export const MOCK_USERS = {

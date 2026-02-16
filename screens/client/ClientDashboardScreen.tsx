@@ -1,3 +1,4 @@
+import { useRouter } from "expo-router";
 import React from "react";
 import {
   FlatList,
@@ -6,7 +7,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useRouter } from "expo-router";
 import LottieAnimation from "../../components/animations/LottieAnimation";
 import LogoutButton from "../../components/shared/LogoutButton";
 import { ORDER_STATUS_INFO } from "../../constants/mockData";
@@ -264,9 +264,7 @@ export const ClientDashboardScreen: React.FC = () => {
               alignItems: "center",
             }}
           >
-            <Text style={{ color: "#fff", fontWeight: "600" }}>
-              🎁 Promo
-            </Text>
+            <Text style={{ color: "#fff", fontWeight: "600" }}>🎁 Promo</Text>
           </TouchableOpacity>
         </View>
 
@@ -299,9 +297,7 @@ export const ClientDashboardScreen: React.FC = () => {
               >
                 💳 Voucher Tersedia ({availableVouchers.length})
               </Text>
-              <TouchableOpacity
-                onPress={() => router.push("/client/voucher")}
-              >
+              <TouchableOpacity onPress={() => router.push("/client/voucher")}>
                 <Text
                   style={{
                     fontSize: 12,

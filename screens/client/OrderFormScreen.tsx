@@ -24,12 +24,8 @@ interface OrderItem {
 export const OrderFormScreen: React.FC = () => {
   const { user } = useAuthStore();
   const { createOrder } = useOrderStore();
-  const {
-    getUserVouchers,
-    calculateDiscount,
-    validateVoucher,
-    useVoucher,
-  } = useVoucherStore();
+  const { getUserVouchers, calculateDiscount, validateVoucher, useVoucher } =
+    useVoucherStore();
 
   const [orderType, setOrderType] = useState<"kiloan" | "satuan">("kiloan");
   const [weight, setWeight] = useState("");
@@ -72,7 +68,7 @@ export const OrderFormScreen: React.FC = () => {
       if (validation.isValid) {
         const { discountAmount, finalAmount } = calculateDiscount(
           selectedVoucher,
-          baseTotal
+          baseTotal,
         );
         return {
           baseTotal,
@@ -670,9 +666,7 @@ export const OrderFormScreen: React.FC = () => {
                     Harga Awal
                   </Text>
                   <Text style={{ fontSize: 12, color: "#999" }}>
-                    Rp{" "}
-                    {getCalculatedPrice()
-                      .baseTotal.toLocaleString("id-ID")}
+                    Rp {getCalculatedPrice().baseTotal.toLocaleString("id-ID")}
                   </Text>
                 </View>
                 <View
@@ -688,10 +682,17 @@ export const OrderFormScreen: React.FC = () => {
                   <Text style={{ fontSize: 12, color: "#22C55E" }}>
                     Potongan Voucher
                   </Text>
-                  <Text style={{ fontSize: 12, fontWeight: "600", color: "#22C55E" }}>
+                  <Text
+                    style={{
+                      fontSize: 12,
+                      fontWeight: "600",
+                      color: "#22C55E",
+                    }}
+                  >
                     -Rp{" "}
-                    {getCalculatedPrice()
-                      .discountAmount.toLocaleString("id-ID")}
+                    {getCalculatedPrice().discountAmount.toLocaleString(
+                      "id-ID",
+                    )}
                   </Text>
                 </View>
                 <View
@@ -717,8 +718,7 @@ export const OrderFormScreen: React.FC = () => {
                     }}
                   >
                     Rp{" "}
-                    {getCalculatedPrice()
-                      .finalAmount.toLocaleString("id-ID")}
+                    {getCalculatedPrice().finalAmount.toLocaleString("id-ID")}
                   </Text>
                 </View>
               </>
@@ -1062,9 +1062,9 @@ export const OrderFormScreen: React.FC = () => {
                             {voucher.type === "discount"
                               ? voucher.discountType === "percentage"
                                 ? `${voucher.discountValue}%`
-                                : `Rp ${(voucher.discountValue || 0).toLocaleString(
-                                    "id-ID"
-                                  )}`
+                                : `Rp ${(
+                                    voucher.discountValue || 0
+                                  ).toLocaleString("id-ID")}`
                               : `${voucher.freeWeight}kg Gratis`}
                           </Text>
                         </View>

@@ -1,6 +1,6 @@
 import { create } from "zustand";
-import { Voucher, UserVoucher } from "../types";
-import { MOCK_VOUCHERS, MOCK_USER_VOUCHERS } from "../constants/mockData";
+import { MOCK_USER_VOUCHERS, MOCK_VOUCHERS } from "../constants/mockData";
+import { UserVoucher, Voucher } from "../types";
 
 interface VoucherState {
   vouchers: Voucher[];
@@ -16,7 +16,7 @@ interface VoucherState {
   getVoucherByCode: (code: string) => Voucher | undefined;
   validateVoucher: (
     voucherId: string,
-    orderAmount: number
+    orderAmount: number,
   ) => { isValid: boolean; message: string };
 
   // Mutations
@@ -27,7 +27,7 @@ interface VoucherState {
   // Utils
   calculateDiscount: (
     voucherId: string,
-    orderAmount: number
+    orderAmount: number,
   ) => { discountAmount: number; finalAmount: number };
   setError: (error: string | null) => void;
 }
@@ -57,13 +57,12 @@ export const useVoucherStore = create<VoucherState>((set, get) => ({
 
   getAvailableVouchers: (userId: string) => {
     const now = new Date();
-    return get()
-      .userVouchers.filter(
-        (uv) =>
-          uv.userId === userId &&
-          !uv.isUsed &&
-          new Date(uv.voucher.expiryDate) > now
-      );
+    return get().userVouchers.filter(
+      (uv) =>
+        uv.userId === userId &&
+        !uv.isUsed &&
+        new Date(uv.voucher.expiryDate) > now,
+    );
   },
 
   getVoucherByCode: (code: string) => {
@@ -120,7 +119,7 @@ export const useVoucherStore = create<VoucherState>((set, get) => ({
 
       // Check if already claimed
       const alreadyClaimed = get().userVouchers.find(
-        (uv) => uv.userId === userId && uv.voucherId === voucherId
+        (uv) => uv.userId === userId && uv.voucherId === voucherId,
       );
 
       if (alreadyClaimed) {
@@ -153,7 +152,9 @@ export const useVoucherStore = create<VoucherState>((set, get) => ({
     try {
       set((state) => ({
         userVouchers: state.userVouchers.map((uv) =>
-          uv.id === userVoucherId ? { ...uv, isUsed: true, usedAt: new Date().toISOString() } : uv
+          uv.id === userVoucherId
+            ? { ...uv, isUsed: true, usedAt: new Date().toISOString() }
+            : uv,
         ),
         isLoading: false,
       }));
@@ -182,7 +183,7 @@ export const useVoucherStore = create<VoucherState>((set, get) => ({
 
       if (voucher.discountType === "percentage") {
         discountAmount = Math.floor(
-          orderAmount * ((voucher.discountValue || 0) / 100)
+          orderAmount * ((voucher.discountValue || 0) / 100),
         );
       } else if (voucher.discountType === "fixed") {
         discountAmount = voucher.discountValue || 0;
